@@ -25,11 +25,28 @@
              console.log(result);
              component.set("v.customFields", result); 
              console.log(component.get("v.customFields"));
+             component.set("v.loading", false);
             } else {
                 console.log('NO GOOD!');
             }
         });
         
         $A.enqueueAction(action);
-    }
+    },
+
+    navigateToRecord: function(component, recId) {
+        var navService = component.find("navService");
+        
+        var pageReference = {
+            type: 'standard__recordPage',
+            attributes: {
+                "recordId": recId,
+                "objectApiName": "Workshop__c",
+                "actionName": "view"
+            }
+        }
+        
+        navService.navigate(pageReference); 
+        $A.get('e.force:refreshView').fire();
+    },
 })

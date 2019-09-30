@@ -20,26 +20,27 @@ public with sharing class CustomFields {
         return objNames;
     }
     
+
     @AuraEnabled
     public static List<CustomField> getObjCustomFields(String objName) {
-        Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-        Map<String,Schema.SObjectField> fieldMap = schemaMap.get(objName).getDescribe().fields.getMap();
+        //the FieldDefinition query requires "Use default data sensitivity level to be check on Data Classification Settings"
+        //this is the only way to easily retrieve the Description value (not available via DescribeFieldResult)
+        List<FieldDefinition> fields = [SELECT Label, QualifiedApiName, (Select DataType From Particles), Description, DurableId FROM FieldDefinition 
+                                        WHERE EntityDefinitionId = :objName ORDER BY Label];
         List<CustomField> fieldsList = new List<CustomField>();
-        
-        for(String fieldName: fieldMap.keySet()) {       
-            Boolean customField = fieldMap.get(fieldName).getDescribe().isCustom();
-            if(customField) {            
+        for(FieldDefinition f: fields) {
+            if(f.QualifiedApiName.right(3) == '__c') {
                 CustomField cf = new CustomField();
-                cf.fieldName = fieldMap.get(fieldName).getDescribe().getName();
-                cf.fieldLabel = fieldMap.get(fieldName).getDescribe().getLabel();
-                cf.fieldType = String.valueOf(fieldMap.get(fieldName).getDescribe().getType());
-                cf.fieldDescription = fieldMap.get(fieldName).getDescribe().getinlineHelpText();
+                cf.fieldName = f.QualifiedApiName;
+                cf.fieldLabel = f.Label;
+                String ep = String.valueOf(f.Particles);
+                cf.fieldType = ep.substringBetween('DataType=','})');
+                cf.fieldDescription = f.Description;
+                cf.fieldDurableId = f.DurableId.substringAfter('.'); //DurableId has format 'objname.XXXXXXXXXXXXXXX'
                 fieldsList.add(cf);
             }
         }
-        return fieldsList;
-        
-        
+        return fieldsList; 
     }
     
     public static boolean hasCustomFields(string objName, Map <String, Schema.SObjectType> schemaMap) {
@@ -69,6 +70,10 @@ public with sharing class CustomFields {
         public String fieldType {get; set;}
         @AuraEnabled
         public String fieldDescription {get; set;}
-        
+        @AuraEnabled
+        public String fieldDurableId {get; set;}
+            
     }
+        
+
 }

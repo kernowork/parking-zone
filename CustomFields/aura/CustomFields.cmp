@@ -1,5 +1,6 @@
 <aura:component controller="CustomFields" implements="flexipage:availableForAllPageTypes,force:appHostable" access="global">
     <aura:attribute name="objectList" type="List" />
+    <aura:attribute name="loading" type="Boolean" default="true" />
     <aura:attribute name="selectedValue" type="String" default="account"/>
     <aura:attribute name="customFields" type="List" />
     <aura:attribute name="columns" type="List"/>
@@ -10,22 +11,24 @@
     <div class="slds-align_absolute-center ">
         <lightning:card title="Objects with Custom Fields">
             <div class="slds-p-around_medium">
-                <lightning:select name="objectId" label="Select an object:" aura:id="objectId" value="{!v.selectedValue}">
+                <aura:if isTrue="{!v.loading}">
+                    <div class="message">
+                        Loading objects with custom fields...
+                    </div>
+                </aura:if>
+                <lightning:select name="objectId" label="Select an object:" aura:id="objectId" value="{!v.selectedValue}"
+                    onchange="{!c.handleChange}">
                     <aura:iteration items="{!v.objectList}" var="obj">
-                        <option text="{!obj.label}" value="{!obj.value}" selected="{!obj.selected}"/>
+                        <option text="{!obj.label}" value="{!obj.value}" selected="{!obj.selected}" />
                     </aura:iteration>
                 </lightning:select>
-                <br/>
-                <div class="slds-align_absolute-center">
-                    <lightning:button variant="brand" type="submit" name="getFields" label="Get Fields" onclick="{!c.getFields}"/> 
-                </div>
+                <br />
                 <div>
-                    <lightning:datatable aura:id="dataTable" data="{! v.customFields }" 
-                                         keyField="Id" columns="{! v.columns }" 
-                                         maxRowSelection="1" onrowselection="{!c.handleRowSelection}" />                       
+                    <lightning:datatable aura:id="dataTable" data="{! v.customFields }" keyField="Id" columns="{! v.columns }"
+                        hideCheckboxColumn="true" />
                 </div>
-                <div>{!v.customFields.fieldLabel}</div>
             </div>
         </lightning:card>
     </div>
+
 </aura:component>
