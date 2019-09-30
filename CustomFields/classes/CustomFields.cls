@@ -2,10 +2,14 @@ public with sharing class CustomFields {
     @AuraEnabled
     public static List<Option> getObjNames(){
         Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+        List<String> keyNames = new List<String> (schemaMap.keySet());
+        keyNames.sort();
+
         List<Option> objNames = new List<Option>();
+
         
         //find objects with custom fields
-        for(String objName: schemaMap.keySet()) { 
+        for(String objName: keyNames) { 
             if(objName.endsWith('changeevent')) {
                 continue;
             }
