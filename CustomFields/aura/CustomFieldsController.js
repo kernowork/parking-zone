@@ -7,7 +7,7 @@
             {label: 'Description', fieldName: 'fieldDescription', type:'text'},
         ]);
         helper.getObjectList(component);
-        helper.getFieldList(component);
+        
     },
 
     handleChange : function(component, event, helper) {

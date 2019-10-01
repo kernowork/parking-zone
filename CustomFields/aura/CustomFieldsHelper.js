@@ -8,6 +8,7 @@
              component.set("v.objectList", result);  
              console.log(result);
              component.set("v.selectedValue",result[0].value);
+             component.set("v.loading", false);
             } else {
                 console.log('NO GOOD!');
             }
@@ -24,8 +25,7 @@
             if(response.getState() === "SUCCESS") {
              console.log('Found fields!'); 
              var result = response.getReturnValue();
-             component.set("v.customFields", result); 
-             component.set("v.loading", false);
+             component.set("v.customFields", result);             
             } else {
                 console.log('NO GOOD!');
             }
