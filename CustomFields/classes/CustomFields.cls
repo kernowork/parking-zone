@@ -6,13 +6,17 @@ public with sharing class CustomFields {
         keyNames.sort();
 
         List<Option> objNames = new List<Option>();
-
-        
+        Option blank = new Option();
+        blank.label = 'Select...';
+        blank.value = 'none';
+        objNames.add(blank);
+      
         //find objects with custom fields
         for(String objName: keyNames) { 
             if(objName.endsWith('changeevent')) {
                 continue;
             }
+            System.debug(objName);
             if(hasCustomFields(objName, schemaMap)) {
                 Option p = new Option();
                 p.label = schemaMap.get(objName).getDescribe().getLabel();
@@ -49,7 +53,7 @@ public with sharing class CustomFields {
     
     public static boolean hasCustomFields(string objName, Map <String, Schema.SObjectType> schemaMap) {
         Map<String,Schema.SObjectField> fieldMap = schemaMap.get(objName).getDescribe().fields.getMap();
-        for(String fieldName: fieldMap.keySet()) {       
+        for(String fieldName: fieldMap.keySet()) {     
             Boolean customField = fieldMap.get(fieldName).getDescribe().isCustom();
             if(customField) {
                 return true;

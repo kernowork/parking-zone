@@ -6,6 +6,8 @@
              console.log('Found objects!'); 
              var result = response.getReturnValue();
              component.set("v.objectList", result);  
+             console.log(result);
+             component.set("v.selectedValue",result[0].value);
             } else {
                 console.log('NO GOOD!');
             }
