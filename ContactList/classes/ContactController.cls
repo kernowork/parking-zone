@@ -1,6 +1,4 @@
 public with sharing class ContactController {
-
-    // not used for anything right now!
     
     @AuraEnabled(Cacheable=true)
     public static Contact[] getContactList() {
