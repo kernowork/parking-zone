@@ -1,0 +1,38 @@
+<template>
+	<lightning-card title="Contacts" icon-name="utility:people">
+		<div class="slds-card__body_inner">
+			<!-- Start contact list -->
+			<template if:true={contacts.data}>
+				<lightning-input type="search"
+					onchange={handleSearchTermChange}
+					variant="label-hidden"
+					class="slds-m-bottom_small"
+					label="Search"
+					placeholder="Search for contacts by name, street address or phone"
+					value={searchTerm}>
+				</lightning-input>
+				<lightning-layout multiple-rows="true" pull-to-boundary="small" oncontactselected={handleContactSelect}>
+					<template for:each={contacts.data} for:item="contact">
+						<lightning-layout-item key={contact.Id} size="3" class="slds-p-around_xx-small">
+							<c-contact-tile contact={contact}></c-contact-tile>
+						</lightning-layout-item>
+					</template>
+				</lightning-layout>
+				<!-- No contacts found -->
+				<template if:false={hasResults}>
+					<div class="slds-align_absolute-center slds-m-vertical_small">
+						Search returns no results...
+					</div>
+				</template>
+			</template>
+			<!-- End contact list -->
+			
+			<!-- Data failed to load -->
+			<template if:true={contacts.error}>
+				<div class="slds-text-color_error">
+					An error occurred while loading the contact list
+				</div>
+			</template>
+		</div>
+	</lightning-card>
+</template>
