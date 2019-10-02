@@ -5,7 +5,6 @@ import ACCOUNT_FIELD from '@salesforce/schema/Contact.AccountId';
 import NAME_FIELD from '@salesforce/schema/Contact.Name';
 const fields = [ACCOUNT_FIELD, NAME_FIELD];
 
-/** ContactController.getAllContacts() Apex method */
 import searchContacts from '@salesforce/apex/ContactController.searchContacts';
 
 export default class ContactList extends NavigationMixin(LightningElement) {
