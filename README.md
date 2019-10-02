@@ -1,6 +1,7 @@
 # parking-zone
 parking zone for Salesforce projects
 
-ContactList - LWC - searchContacts (adapted from ContactList in lwc-recipes)
-CustomFields - Aura - display details of custom fields (inc. Description) of selected object
+ContactList - LWC - search Contacts; adapted from ContactList in https://github.com/trailheadapps/lwc-recipes
+
+CustomFields - Aura - display details of Custom Fields (including Description!!)
 
