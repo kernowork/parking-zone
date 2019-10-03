@@ -1,9 +1,8 @@
 <aura:documentation>
-	<aura:description>Documentation</aura:description>
-	<aura:example name="Custom Fields" ref="CustomFields" label="Label">
-		User can view custom fields for a selected object. 
-		Note: the controller queries from the FieldDefinition object 
-		This requires "Use default data sensitivity level" to be
-		checked on Data Classification Settings.
-	</aura:example>
+	<aura:description>
+			User can view custom fields for a selected object. 
+			Note: the controller queries from the FieldDefinition object 
+			This requires "Use default data sensitivity level" to be
+			checked on Data Classification Settings.
+	</aura:description>
 </aura:documentation>
