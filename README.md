@@ -1,7 +1,17 @@
 # parking-zone
-parking zone for Salesforce projects
+## Parking zone for Salesforce projects
 
-ContactList - LWC - search Contacts; adapted from ContactList in https://github.com/trailheadapps/lwc-recipes
+**ContactList**
+ - LWC 
+ - adapted from ContactList in https://github.com/trailheadapps/lwc-recipes
+ - search Contacts and navigate to selected
 
-CustomFields - Aura - display details of Custom Fields (including Description!!)
+**CustomFields**
+ - Aura and LWC 
+ - display list of all objects with custom fields (this query runs slowly - will be looking to speed it up!)
+ - display details of custom fields for selected object
+ - includes Description!!
+ - the FieldDefinition query in the apex controller requires "Use default data sensitivity level" to be checked on Data Classification Settings (Description value not available via DescribeFieldResult)
+ 
+ 
 

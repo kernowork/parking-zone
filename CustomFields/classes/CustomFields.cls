@@ -1,5 +1,5 @@
 public with sharing class CustomFields {
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<Option> getObjNames(){
         Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
         List<String> keyNames = new List<String> (schemaMap.keySet());
@@ -29,9 +29,9 @@ public with sharing class CustomFields {
     }
     
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<CustomField> getObjCustomFields(String objName) {
-        //the FieldDefinition query requires "Use default data sensitivity level to be check on Data Classification Settings"
+        //the FieldDefinition query requires "Use default data sensitivity level" to be checked on Data Classification Settings
         //this is the only way to easily retrieve the Description value (not available via DescribeFieldResult)
         List<FieldDefinition> fields = [SELECT Label, QualifiedApiName, (Select DataType From Particles), Description, DurableId FROM FieldDefinition 
                                         WHERE EntityDefinitionId = :objName ORDER BY Label];
@@ -48,6 +48,7 @@ public with sharing class CustomFields {
                 fieldsList.add(cf);
             }
         }
+        System.debug('fieldsList ' + fieldsList);
         return fieldsList; 
     }
     

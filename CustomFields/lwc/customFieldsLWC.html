@@ -1,0 +1,20 @@
+<template>
+    <lightning-card title="Objects with Custom Fields">
+        <div class="slds-p-around_large">
+            <template if:true={loading}>
+                <div class="message">
+                    Loading object list...
+                </div>
+                <br/>
+            </template>
+
+            <lightning-combobox name="objects" label="Object list:" value={object} placeholder="Select Object"
+                options={objOptions} onchange={handleChange}></lightning-combobox>
+
+            <div>
+                <lightning-datatable key-field="id" data={fields} columns={columns} hide-checkbox-column=true>
+                </lightning-datatable>
+            </div>
+        </div>
+    </lightning-card>
+</template>
