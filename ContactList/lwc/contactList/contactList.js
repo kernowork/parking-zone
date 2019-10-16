@@ -1,9 +1,5 @@
 import { LightningElement, track, wire} from 'lwc';
-import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { NavigationMixin } from 'lightning/navigation';
-import ACCOUNT_FIELD from '@salesforce/schema/Contact.AccountId';
-import NAME_FIELD from '@salesforce/schema/Contact.Name';
-const fields = [ACCOUNT_FIELD, NAME_FIELD];
 
 import searchContacts from '@salesforce/apex/ContactController.searchContacts';
 
@@ -45,21 +41,4 @@ export default class ContactList extends NavigationMixin(LightningElement) {
 		
 	}
 
-	allDoneHandler() {
-		console.log('allDoneHandler');
-		this.contactId = '';
-	}
-
-	@wire(getRecord, { recordId: '$contactId', fields }) contact;
-	get accID() {
-		return getFieldValue(this.contact.data, ACCOUNT_FIELD);
-	}
-	get name() {
-		return getFieldValue(this.contact.data, NAME_FIELD);
-	}
-
-	get showform() {
-		return(getFieldValue(this.contact.data, ACCOUNT_FIELD) !== '');
-	}
-	
 }
